@@ -19,7 +19,7 @@ This project is not yet accessible online.
 - Docker
 
 ## Running the client
-`docker start boats`
+~~`docker start boats`~~
 
 ## More information
 Check out the project [wiki](https://github.com/PadraigGillen/ships_and_slips/wiki).
