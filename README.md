@@ -1,4 +1,4 @@
-# Ships, slips, docks, and so on
+# Trading Ports: Ships, slips, docks, and so on
 
 ## High level goals
 - Implement a REST API to track ships as they travel between docks and through the sea
@@ -17,4 +17,4 @@ We are extending an assignment for [CS 496](http://eecs.oregonstate.edu/ecampus-
 - Docker
 
 ## More information
-Check out the project [wiki](https://github.com/PadraigGillen/trading-ports/wiki).
+Check out the [project wiki](https://github.com/PadraigGillen/trading-ports/wiki).
