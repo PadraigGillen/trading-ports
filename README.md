@@ -1,6 +1,12 @@
 # Ships, slips, docks, and so on
-The goal is to create a REST API to track ships as they travel to our docks, and back out to the ocean.
 
+## Goal
+Create a REST API to track ships as they travel to our docks, and back out to the ocean.
+
+## Inspiration
+We are extending an assignment for [CS 496](http://eecs.oregonstate.edu/ecampus-video/CS496/syllabus/index.html) at Oregon State University.
+
+## Project URL
 This project is not yet accessible online.
 
 ## Services/technologies used
@@ -16,4 +22,4 @@ This project is not yet accessible online.
 `docker start boats`
 
 ## More information
-- Check out the project [wiki](https://github.com/PadraigGillen/ships_and_slips/wiki).
+Check out the project [wiki](https://github.com/PadraigGillen/ships_and_slips/wiki).
