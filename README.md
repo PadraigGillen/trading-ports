@@ -16,5 +16,18 @@ We are extending an assignment for [CS 496](http://eecs.oregonstate.edu/ecampus-
 - Postman
 - Docker
 
+## Installing
+```
+python -m venv env
+. env/bin/activate
+pip install -r requirements.txt
+```
+
+## Running the visualization
+```
+. env/bin/activate
+flask run
+```
+
 ## More information
 Check out the [project wiki](https://github.com/PadraigGillen/trading-ports/wiki).
