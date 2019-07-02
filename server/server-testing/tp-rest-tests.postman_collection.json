@@ -1,0 +1,1579 @@
+{
+	"info": {
+		"_postman_id": "93d599c7-df84-4e67-a902-cb46cfe52b08",
+		"name": "Boats_slips_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. POST Create Boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd56a3f5-1eb7-4f43-9ef6-88fc6c10ae1a",
+						"type": "text/javascript",
+						"exec": [
+							"//Create boat 1",
+							"//    - test variables",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"postman.setEnvironmentVariable(\"BoatIdOne\", jsonData.boat_id);",
+							"postman.setEnvironmentVariable(\"BoatNameOne\", jsonData.name);",
+							"postman.setEnvironmentVariable(\"BoatTypeOne\", jsonData.type);",
+							"",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"var boat_type = pm.environment.get(\"BoatTypeOne\");",
+							"var boat_length = pm.environment.get(\"BoatLengthOne\");",
+							"",
+							"pm.test(\"Check for boat at sea\", function () {",
+							"    pm.expect(jsonData.at_sea).to.be.equal(true);",
+							"});",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.equal(boat_type);",
+							"});",
+							"",
+							"//Complication with floats in javascript. Need to convert first.",
+							"pm.test(\"Check for boat length\", function () {",
+							"    if(Number.isInteger(jsonData.length)){",
+							"        var foo = jsonData.length.toFixed(1);",
+							"        pm.expect(foo).to.be.equal(boat_length);",
+							"    }",
+							"    else{",
+							"        pm.expect(jsonData.length).to.be.equal(parseFloat(boat_length));",
+							"    }",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Darth Vadar\",\n  \"type\": \"Tie Fighter\",\n  \"length\": {{BoatLengthOne}}\n}"
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat"
+					]
+				},
+				"description": "Create boat 1\r\n    - test variables\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "2. POST Create Boat 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "660065c9-c718-4fc2-9445-9a7ddedd08c1",
+						"type": "text/javascript",
+						"exec": [
+							"//Create boat 2",
+							"//    - test variables",
+							"//    - test status code",
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"postman.setEnvironmentVariable(\"BoatIdTwo\", jsonData.boat_id);",
+							"postman.setEnvironmentVariable(\"BoatNameTwo\", jsonData.name);",
+							"postman.setEnvironmentVariable(\"BoatTypeTwo\", jsonData.type);",
+							"",
+							"var boat_name = pm.environment.get(\"BoatNameTwo\");",
+							"var boat_type = pm.environment.get(\"BoatTypeTwo\");",
+							"var boat_length = pm.environment.get(\"BoatLengthTwo\");",
+							"",
+							"pm.test(\"Check for boat at sea\", function () {",
+							"    pm.expect(jsonData.at_sea).to.be.equal(true)",
+							"})",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.equal(boat_type);",
+							"});",
+							"",
+							"pm.test(\"Check for boat length\", function () {",
+							"    if(Number.isInteger(jsonData.length)){",
+							"        var foo = jsonData.length.toFixed(1);",
+							"        pm.expect(foo).to.be.equal(boat_length);",
+							"    }",
+							"    else{",
+							"        pm.expect(jsonData.length).to.be.equal(parseFloat(boat_length));",
+							"    }",
+							"});",
+							"",
+							"postman.setEnvironmentVariable(\"BoatIdTwo\", jsonData.boat_id);",
+							"postman.setEnvironmentVariable(\"BoatNameTwo\", jsonData.name);",
+							"postman.setEnvironmentVariable(\"BoatTypeTwo\", jsonData.type);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{BoatNameTwo}}\",\n  \"type\": \"{{BoatTypeTwo}}\",\n  \"length\": {{BoatLengthTwo}}\n}"
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat"
+					]
+				},
+				"description": "Create boat 2\r\n    - test variables\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "3. GET all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b4f459d-e83e-48f1-baa2-4f75a1dda966",
+						"type": "text/javascript",
+						"exec": [
+							"//get all boats",
+							"//    - test status code",
+							"//    - test number of boats",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"var boat_name_two = pm.environment.get(\"BoatNameTwo\");",
+							"",
+							"pm.test(\"Check for boat 1\", function () {",
+							"    var pass = false;",
+							"    for(var each in jsonData){",
+							"        if(jsonData[each].name == boat_name){",
+							"            pass = true;",
+							"            break;",
+							"        }",
+							"    }",
+							"    pm.expect(pass).to.be.equal(true);",
+							"});",
+							"",
+							"pm.test(\"Check for boat 2\", function () {",
+							"    var pass = false;",
+							"    for(var each in jsonData){",
+							"        if(jsonData[each].name == boat_name_two){",
+							"            pass = true;",
+							"            break;",
+							"        }",
+							"    }",
+							"    pm.expect(pass).to.be.equal(true);",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat"
+					]
+				},
+				"description": "get all boats\r\n    - test status code\r\n    - test number of boats"
+			},
+			"response": []
+		},
+		{
+			"name": "4. GET Boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "32c65966-bff0-41b6-869e-d54a5323debb",
+						"type": "text/javascript",
+						"exec": [
+							"//get specific boat",
+							"//    - test status code",
+							"//    - test boat exists with specific information",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"    ",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"var boat_type = pm.environment.get(\"BoatTypeOne\");",
+							"var boat_length = pm.environment.get(\"BoatLengthOne\");",
+							"",
+							"pm.test(\"Check for boat at sea\", function () {",
+							"    pm.expect(jsonData.at_sea).to.be.equal(true);",
+							"});",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.equal(boat_type);",
+							"});",
+							"",
+							"//Complication with floats in javascript. Need to convert first.",
+							"pm.test(\"Check for boat length\", function () {",
+							"    if(Number.isInteger(jsonData.length)){",
+							"        var foo = jsonData.length.toFixed(1);",
+							"        pm.expect(foo).to.be.equal(boat_length);",
+							"    }",
+							"    else{",
+							"        pm.expect(jsonData.length).to.be.equal(parseFloat(boat_length));",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "get boat 1\r\n    - test status code\r\n    - test boat exists with specific information"
+			},
+			"response": []
+		},
+		{
+			"name": "5. POST Create Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe755738-c63e-4636-906b-f599b1b0579e",
+						"type": "text/javascript",
+						"exec": [
+							"//create slip 1",
+							"//    - test status code",
+							"//    - test that the number is correct",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Check if slip number exists\", function () {",
+							"    var check_num = false;",
+							"    if(jsonData.number){",
+							"        check_num = true;",
+							"    }",
+							"    pm.expect(check_num).to.be.equal(true);",
+							"});",
+							"",
+							"pm.test(\"Check if current_boat exists\", function () {",
+							"    pm.expect(jsonData.current_boat).to.be.equal(null);",
+							"});",
+							"",
+							"pm.test(\"Check if boat arrival date exists\", function () {",
+							"    pm.expect(jsonData.arrival_date).to.be.equal(null);",
+							"});",
+							"",
+							"pm.test(\"Check if boat slip id exists\", function () {",
+							"    var check_id = false;",
+							"    if(jsonData.slip_id){",
+							"        check_id = true;",
+							"    }",
+							"    pm.expect(check_id).to.be.equal(true);",
+							"});",
+							"",
+							"postman.setEnvironmentVariable(\"SlipNumberOne\", jsonData.number);",
+							"postman.setEnvironmentVariable(\"SlipIdOne\", jsonData.slip_id);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip"
+					]
+				},
+				"description": "create slip 1\r\n    - test status code\r\n    - test that the number is correct"
+			},
+			"response": []
+		},
+		{
+			"name": "6. PUT Dock Boat 1 In Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "435ce13a-1cbb-4419-8a71-37196329fdc0",
+						"type": "text/javascript",
+						"exec": [
+							"//put boat 1 in slip 1",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}",
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "put boat 1 in slip 1\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "7. GET Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c007311e-024d-46ea-b11d-b5b1d96dfece",
+						"type": "text/javascript",
+						"exec": [
+							"//get slip 1",
+							"//    - test status code",
+							"//    - test \"current_boat\"",
+							"//    - test \"arrival_date\"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var boat_id = pm.environment.get(\"BoatIdOne\");",
+							"",
+							"pm.test(\"Check if current_boat exists\", function () {",
+							"    pm.expect(jsonData.current_boat).to.be.equal(boat_id);",
+							"});",
+							"",
+							"pm.test(\"Check for arrival date\", function () {",
+							"    var arrival_check = false;",
+							"    if(jsonData.arrival_date){",
+							"        arrival_check = true;",
+							"    }",
+							"    pm.expect(arrival_check).to.be.equal(true);",
+							"});",
+							"",
+							"postman.setEnvironmentVariable(\"BoatOneURL\", jsonData.boat_url);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}"
+					]
+				},
+				"description": "get slip 1\r\n    - test status code\r\n    - test \"current_boat\"\r\n    - test \"arrival_date\"\r\n    - save boat URL"
+			},
+			"response": []
+		},
+		{
+			"name": "8. GET Boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82fbdc18-b7cb-4137-bc7d-170908667da3",
+						"type": "text/javascript",
+						"exec": [
+							"//get boat 1",
+							"//    - implicit test for boat URL",
+							"//    - test status code",
+							"//    - test \"at_sea\"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"",
+							"pm.test(\"Check that boat 1 is not at sea\", function () {",
+							"    pm.expect(jsonData.at_sea).to.be.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com{{BoatOneURL}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com{{BoatOneURL}}"
+					]
+				},
+				"description": "get boat 1\r\n    - test status code\r\n    - test \"at_sea\""
+			},
+			"response": []
+		},
+		{
+			"name": "9. PUT Undock Boat 1 From Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "427062fd-4c24-4eb2-a7a1-f8a8f251b2f9",
+						"type": "text/javascript",
+						"exec": [
+							"//put boat 1 out of slip 1",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}",
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "put boat 1 out of slip 1\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "10. GET Boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37b16fa8-3a62-4ab3-85b2-142cc63c446c",
+						"type": "text/javascript",
+						"exec": [
+							"//get boat 1",
+							"//    - test status code",
+							"//    - test \"at_sea\"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"",
+							"pm.test(\"Check that boat 1 is at sea\", function () {",
+							"    pm.expect(jsonData.at_sea).to.be.equal(true);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "get boat 1\r\n    - test status code\r\n    - test \"at_sea\""
+			},
+			"response": []
+		},
+		{
+			"name": "11. GET Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "41677d6e-7181-48bd-9dec-91eafc766099",
+						"type": "text/javascript",
+						"exec": [
+							"//get slip 1",
+							"//    - test status code",
+							"//    - test \"current_boat\"",
+							"//    - test \"arrival_date\"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Check if current_boat exists\", function () {",
+							"    pm.expect(jsonData.current_boat).to.be.equal(null);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}"
+					]
+				},
+				"description": "get slip 1\r\n    - test status code\r\n    - test \"current_boat\"\r\n    - test \"arrival_date\""
+			},
+			"response": []
+		},
+		{
+			"name": "12. PUT Dock boat 1 In Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d7ea86c-79cc-4086-bac2-4fedcff283da",
+						"type": "text/javascript",
+						"exec": [
+							"//put boat 1 in slip 1",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}",
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "put boat 1 in slip 1\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "13. PUT Dock Boat 2 In Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aa5d8c5-d53c-436d-b318-0b38933ccccf",
+						"type": "text/javascript",
+						"exec": [
+							"//put boat 2 in slip 1 (fail)",
+							"//    - test status code 403",
+							"",
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}/boat/{{BoatIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}",
+						"boat",
+						"{{BoatIdTwo}}"
+					]
+				},
+				"description": "put boat 2 in slip 1 (fail)\r\n    - test status code 403"
+			},
+			"response": []
+		},
+		{
+			"name": "14. GET Boat 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "809cfe93-4698-4812-8668-c965ac833d38",
+						"type": "text/javascript",
+						"exec": [
+							"//get boat 2",
+							"//    - test status code",
+							"//    - test \"at_sea\"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var boat_name = pm.environment.get(\"BoatNameTwo\");",
+							"",
+							"pm.test(\"Check that boat 1 is not at sea\", function () {",
+							"    pm.expect(jsonData.at_sea).to.be.equal(true);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdTwo}}"
+					]
+				},
+				"description": "get boat 2\r\n    - test status code\r\n    - test \"at_sea\""
+			},
+			"response": []
+		},
+		{
+			"name": "15. GET Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0929f9c4-64dc-4384-9813-45f3823da5ff",
+						"type": "text/javascript",
+						"exec": [
+							"//get slip 1",
+							"//    - test status code",
+							"//    - test \"current_boat\"",
+							"//    - test \"arrival_date\"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var boat_id = pm.environment.get(\"BoatIdOne\");",
+							"",
+							"pm.test(\"Check if current_boat is boat 1\", function () {",
+							"    pm.expect(jsonData.current_boat).to.be.equal(boat_id);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}"
+					]
+				},
+				"description": "get slip 1\r\n    - test status code\r\n    - test \"current_boat\"\r\n    - test \"arrival_date\""
+			},
+			"response": []
+		},
+		{
+			"name": "16. PATCH Update Boat 1 Values",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "970cc956-e996-41e5-b9db-c4bba8bbf587",
+						"type": "text/javascript",
+						"exec": [
+							"//patch boat 1",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"var boat_type = pm.environment.get(\"BoatTypeOne\");",
+							"var boat_id = pm.environment.get(\"BoatIdOne\");",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.not.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.not.equal(boat_type);",
+							"});",
+							"",
+							"pm.test(\"Check boat id didn't change\", function () {",
+							"    pm.expect(jsonData.boat_id).to.be.equal(boat_id);",
+							"});",
+							"",
+							"postman.setEnvironmentVariable(\"BoatIdOne\", jsonData.boat_id);",
+							"postman.setEnvironmentVariable(\"BoatNameOne\", jsonData.name);",
+							"postman.setEnvironmentVariable(\"BoatTypeOne\", jsonData.type);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Luke\", \"type\" : \"X-Wing\", \"boat_id\" : \"Something_else\"}"
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "patch boat 1\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "17. GET Boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2eeca95-3094-4ac6-941a-911ed8b2f834",
+						"type": "text/javascript",
+						"exec": [
+							"//patch boat 1",
+							"//    - test status code",
+							"//    - test variables",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"var boat_name = pm.environment.get(\"BoatNameOne\");",
+							"var boat_type = pm.environment.get(\"BoatTypeOne\");",
+							"var boat_id = pm.environment.get(\"BoatIdOne\");",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.equal(boat_type);",
+							"});",
+							"",
+							"pm.test(\"Check boat id didn't change\", function () {",
+							"    pm.expect(jsonData.boat_id).to.be.equal(boat_id);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "get boat 1\r\n    - test status code\r\n    - test variables"
+			},
+			"response": []
+		},
+		{
+			"name": "18. PATCH Update Boat 2 Values",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83e5f769-6403-429e-add9-92365e74aeae",
+						"type": "text/javascript",
+						"exec": [
+							"//patch boat 2 (fail)",
+							"//    - test status code 404",
+							"//    - test \"current_boat\"",
+							"//    - test \"arrival_date\"",
+							"",
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"var boat_name = pm.environment.get(\"BoatNameTwo\");",
+							"var boat_type = pm.environment.get(\"BoatTypeTwo\");",
+							"var boat_id = pm.environment.get(\"BoatIdTwo\");",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.equal(boat_type);",
+							"});",
+							"",
+							"pm.test(\"Check boat id didn't change\", function () {",
+							"    pm.expect(jsonData.boat_id).to.be.equal(boat_id);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\" : \"Luke\", \"type\" : \"X-Wing\" }"
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdTwo}}"
+					]
+				},
+				"description": "patch boat 2 (fail)\r\n    - test status code 404\r\n    - test \"current_boat\"\r\n    - test \"arrival_date\""
+			},
+			"response": []
+		},
+		{
+			"name": "19. GET Boat 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "da37a228-4deb-4037-ad17-a6411b6902dd",
+						"type": "text/javascript",
+						"exec": [
+							"//get boat 2",
+							"//    - test status code",
+							"//    - test variables",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"var boat_name = pm.environment.get(\"BoatNameTwo\");",
+							"var boat_type = pm.environment.get(\"BoatTypeTwo\");",
+							"var boat_id = pm.environment.get(\"BoatIdTwo\");",
+							"",
+							"pm.test(\"Check for boat name\", function () {",
+							"    pm.expect(jsonData.name).to.be.equal(boat_name);",
+							"});",
+							"",
+							"pm.test(\"Check for boat type\", function () {",
+							"    pm.expect(jsonData.type).to.be.equal(boat_type);",
+							"});",
+							"",
+							"pm.test(\"Check boat id didn't change\", function () {",
+							"    pm.expect(jsonData.boat_id).to.be.equal(boat_id);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdTwo}}"
+					]
+				},
+				"description": "get boat 2\r\n    - test status code\r\n    - test variables"
+			},
+			"response": []
+		},
+		{
+			"name": "20. POST Create Slip 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ab8a22c-e361-45ec-a59d-ef93305d0326",
+						"type": "text/javascript",
+						"exec": [
+							"//get boat 2",
+							"//    - test status code",
+							"//    - test \"at_sea\"",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"postman.setEnvironmentVariable(\"SlipNumberTwo\", jsonData.number);",
+							"postman.setEnvironmentVariable(\"SlipIdTwo\", jsonData.slip_id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip"
+					]
+				},
+				"description": "create slip 2\r\n    - test status code\r\n    - test number"
+			},
+			"response": []
+		},
+		{
+			"name": "21. GET all slips",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0afb984a-540f-4a30-ae19-8eea1de4d039",
+						"type": "text/javascript",
+						"exec": [
+							"//get all slips",
+							"//    - test status code",
+							"//    - test number of slips",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Check boat id didn't change\", function () {",
+							"    pm.expect(jsonData.length).to.be.equal(2);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip"
+					]
+				},
+				"description": "get all slips\r\n    - test status code\r\n    - test number of slips"
+			},
+			"response": []
+		},
+		{
+			"name": "22. PUT Boat 2 In Slip 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aa1a9fd-c5a1-4437-9409-b70b5437e922",
+						"type": "text/javascript",
+						"exec": [
+							"//put boat 2 in slip 2",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdTwo}}/boat/{{BoatIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdTwo}}",
+						"boat",
+						"{{BoatIdTwo}}"
+					]
+				},
+				"description": "put boat 2 in slip 2\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "23. DELETE Slip 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f6fffc3-946b-4ff5-af28-c1d1872dddd0",
+						"type": "text/javascript",
+						"exec": [
+							"//delete slip 1",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdOne}}"
+					]
+				},
+				"description": "delete slip 1\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "24. DELETE Boat 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1276575e-1e4a-457b-bc45-0c7b267e38df",
+						"type": "text/javascript",
+						"exec": [
+							"//delete boat 2",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdTwo}}"
+					]
+				},
+				"description": "delete boat 2\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "25. GET all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "99da908d-f0d4-4f6b-9038-51ced4c2e87d",
+						"type": "text/javascript",
+						"exec": [
+							"//get all boats",
+							"//  - test status code",
+							"//    - test for boat 2",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var boat_one = pm.environment.get(\"BoatNameOne\");",
+							"var boat_two = pm.environment.get(\"BoatNameTwo\");",
+							"var jsonData = pm.response.json();",
+							"var test_num = false;",
+							"var test_at_sea = false;",
+							"",
+							"for(i=0; i < jsonData.length; i++){",
+							"    if(jsonData[i].name == boat_two){",
+							"        test_num = true;",
+							"    }",
+							"    if(jsonData[i].name == boat_one){",
+							"        if(jsonData[i].at_sea == false){",
+							"            test_at_sea = true;",
+							"        }",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"Check if boat does not exists\", function () {",
+							"    pm.expect(test_num).to.be.equal(false);",
+							"});",
+							"",
+							"pm.test(\"Check if boat 1 is at sea\", function () {",
+							"    pm.expect(test_at_sea).to.be.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat"
+					]
+				},
+				"description": "get all boats\r\n  - test status code\r\n    - test for boat 2"
+			},
+			"response": []
+		},
+		{
+			"name": "26. GET all slips Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9160db1a-a1b2-4950-bb7c-2e5e6a2384bc",
+						"type": "text/javascript",
+						"exec": [
+							"//get all slips",
+							"//  - test status code",
+							"//    - test for slip 1",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var boat_two = pm.environment.get(\"BoatNameTwo\");",
+							"var jsonData = pm.response.json();",
+							"var test_num = false;",
+							"var test_boat_id = false;",
+							"var test_arrival = false;",
+							"",
+							"for(i=0; i < jsonData.length; i++){",
+							"    if(jsonData[i].number == 1){ //if slip 1 exists then test fails.",
+							"        test_num = true;",
+							"    }",
+							"    if(jsonData[i].number == 2){",
+							"        if(jsonData[i].current_boat != null){ //if there is a boat id then test fails.",
+							"            test_boat_id = true;",
+							"        }",
+							"    }",
+							"    if(jsonData[i].number == 2){ //if there is an arrival date then test fails.",
+							"        if(jsonData[i].arrival_date != null){",
+							"            test_at_sea = true;",
+							"        }",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"Check if slip 1 does not exist\", function () {",
+							"    pm.expect(test_num).to.be.equal(false);",
+							"});",
+							"",
+							"pm.test(\"Check if slip 2 has a boat\", function () {",
+							"    pm.expect(test_boat_id).to.be.equal(false);",
+							"});",
+							"",
+							"pm.test(\"Check if slip 2 has an arrival date\", function () {",
+							"    pm.expect(test_arrival).to.be.equal(false);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip"
+					]
+				},
+				"description": "get all slips\r\n  - test status code\r\n    - test for slip 1"
+			},
+			"response": []
+		},
+		{
+			"name": "27. DELETE Cleanup Boat 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebe3820d-320f-4179-90bb-17bc4fe0d82c",
+						"type": "text/javascript",
+						"exec": [
+							"//delete slip 1",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/boat/{{BoatIdOne}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"boat",
+						"{{BoatIdOne}}"
+					]
+				},
+				"description": "delete slip 1\r\n    - test status code"
+			},
+			"response": []
+		},
+		{
+			"name": "28. DELETE Cleanup Slip 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "28dfe335-c6bd-4fab-a94c-636bbe3cba9b",
+						"type": "text/javascript",
+						"exec": [
+							"//delete boat 2",
+							"//    - test status code",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://assignment-3-boats.appspot.com/slip/{{SlipIdTwo}}",
+					"protocol": "https",
+					"host": [
+						"assignment-3-boats",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"slip",
+						"{{SlipIdTwo}}"
+					]
+				},
+				"description": "delete boat 2\r\n    - test status code"
+			},
+			"response": []
+		}
+	]
+}
