@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 To Run:
     
@@ -6,7 +7,7 @@ To Run:
     flask run
 
 """
-#!/usr/bin/env python
+
 from flask import Flask
 from flask_restful import Resource, Api
 app = Flask(__name__)
