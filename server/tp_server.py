@@ -9,11 +9,11 @@ To Run:
 """
 
 from flask import Flask, render_template, g
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse, abort
 import sqlite3
 
 app = Flask(__name__)
-
+api = Api(app)
 
 # =====> using the 'g' object to auto-open/close SQL connection
 
@@ -21,7 +21,7 @@ app = Flask(__name__)
 # using this site as a reference so to avoid the routes being cluttered with db work
 @app.before_request
 def before_request():
-    g.db = sqlite3.connect(database.db)
+    g.db = sqlite3.connect("database.db")
 
 @app.teardown_request
 def teardown_request(exception):
@@ -40,8 +40,58 @@ def query_db(query, args=(), one=False):
 # =====> Routes
 
 @app.route("/")
-def intro():
-    return "<h1>Welcome to our boat site</h1>"
+def get():
+    return "<h1>Hello! <a href='/boats'>Have a peek at our boats?</a></h1>"
+
+BOATS = {
+    'boat1': {'boat': 'skipper'},
+    'boat2': {'boat': 'destroyer'},
+    'boat3': {'boat': 'profiteer'},
+}
+
+
+def abort_if_boat_doesnt_exist(boat_id):
+    if boat_id not in BOATS:
+        abort(404, message="boat {} doesn't exist".format(boat_id))
+
+parser = reqparse.RequestParser()
+parser.add_argument('boat')
+
+
+# boat
+# shows a single boat item and lets you delete a boat item
+class boat(Resource):
+    def get(self, boat_id):
+        abort_if_boat_doesnt_exist(boat_id)
+        return BOATS[boat_id]
+
+    def delete(self, boat_id):
+        abort_if_boat_doesnt_exist(boat_id)
+        del BOATS[boat_id]
+        return '', 204
+
+    def put(self, boat_id):
+        args = parser.parse_args()
+        boat = {'boat': args['boat']}
+        BOATS[boat_id] = boat
+        return boat, 201
+
+# boatList
+# shows a list of all boats, and lets you POST to add new boats
+class boatList(Resource):
+    def get(self):
+        return BOATS
+
+    def post(self):
+        args = parser.parse_args()
+        boat_id = int(max(BOATS.keys()).lstrip('boat')) + 1
+        boat_id = 'boat%i' % boat_id
+        BOATS[boat_id] = {'boat': args['boat']}
+        return BOATS[boat_id], 201
+
+api.add_resource(boatList, '/boats/')
+api.add_resource(boat, '/boats/<boat_id>')
+
 
 """
 [GET REQUESTS]
@@ -108,3 +158,6 @@ def intro():
 
 """
 
+
+if __name__ == "__main__":
+    app.run(debug=True)
